@@ -32,7 +32,7 @@ class Pre_Proc:
     def conc(self):
         data=pd.concat(objs=[self.true,self.false],axis=0)
         
-        data.reset_index
+        data.index=[x for x in range(len(data))]
         data=data.drop(labels=['subject','date'],axis=1)
         print("SELFCONC",data.head())
         return data
@@ -75,8 +75,12 @@ class Pre_Proc:
         return text
 ####     
     def token_it(self,text):
-        text=str(text)
-        tokens=word_tokenize(text)
+        tokens=pd.Series()
+        print('\n\nTOKENISSE\n\n',text)
+        for i in range(len(text)):
+            temp=word_tokenize(str(text[i]))
+            temp=pd.Series(temp)
+            tokens.append(temp)
         print('\nOP tokened',tokens)
         return tokens
     
@@ -95,7 +99,7 @@ class Pre_Proc:
         for func in pre_process:
             text=func(text)
         print('\n\n\nPIPETOKEN',text)
-        print('AFTER',len(text))
+        print('\n\nAFTER',len(text))
         return text
         
 #####
@@ -104,9 +108,9 @@ class Pre_Proc:
         print(data.head())
         data['text']=self.pipe_text(data['text'])
         data['title']=self.pipe_text(data['title'])
+        print('\n\n\n\n\nBEFORE\n\n\n\n\n',len(data['title']))
         data['text']=self.pipe_token(data['text'])
-        data['title']=self.pipe_text(data['title'])
-        print('BEFORE',len(data['title']))
+        print('\n\n\n\n\nBEFORE\n\n\n\n\n',len(data['title']))
         data['title']=self.pipe_token(data['title'])
 
         #print(type(data))
