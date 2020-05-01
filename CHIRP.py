@@ -9,7 +9,6 @@ Created on Thu Apr 30 12:15:13 2020
 #IMPORT TIME
 import tweepy as tp
 import pandas as pd
-import numpy as np
 import sys
 
 #############################################################################

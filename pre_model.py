@@ -19,18 +19,24 @@ import pre_proc
 ###########################
 class Pre_Model:
     def __init__(self):
-        self.df=pre_proc.Pre_Proc.preprocess()
+        obj=pre_proc.Pre_Proc('/Users/satyadev/Downloads/fake-and-real-news-dataset/')
+        self.df=obj.preprocess()
+        
         
     def train_test(self,data):
-        x_train,x_test,y_train,y_test=train_test_split(x=data['text'],y=data['veri'],test_size=0.2,random_state=666)
+        print("PREMODEL",data.head())
+        x_train,x_test,y_train,y_test=train_test_split(data['text'],data['veri'],test_size=0.2,random_state=666)
         return x_train,x_test,y_train,y_test
     
     def keras_token(self,x_train,x_test):
+        
         tokenize=Tokenizer(num_words=max_features)
         tokenize.fit_on_texts(x_train)
         return tokenize
     
     def data_tokenize(self,x_train,x_test):
+        print(x_train)
+
         tokenize=self.keras_token(x_train,x_test)
         x_train_features=np.array(tokenize.texts_to_sequences(x_train))
         x_test_features=np.array(tokenize.texts_to_sequences(x_test))

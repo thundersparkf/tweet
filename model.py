@@ -9,9 +9,7 @@ Created on Fri May  1 11:05:47 2020
 
 
 ############################
-from gensim.models import KeyedVectors
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.sequence import pad_sequences
+
 from keras.layers import Dense, Input, LSTM, Embedding, CuDNNGRU, Dropout
 from keras.layers import Bidirectional,GlobalMaxPool1D
 from keras.models import Model
@@ -21,7 +19,8 @@ import pre_model
 ########################
 class Model:
     def __init__(self):
-        self.x_train,self.x_test,self.y_train,self.y_test,self.emb_size,self.emb_mat=pre_model.Pre_Model.pre_mod()
+        obj=pre_model.Pre_Model()
+        self.x_train,self.x_test,self.y_train,self.y_test,self.emb_size,self.emb_mat=obj.pre_mod()
     
     def Model_train(self):
         inp=Input(shape=(pre_model.maxlen,))
