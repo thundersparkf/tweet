@@ -20,21 +20,22 @@ class Tweet:
     Class Tweet to '''
     
     def __init__(self,twitter_keys):
-        print('keys: ',twitter_keys)
+
         self.consumer_key=twitter_keys['consumer_key']
         self.consumer_secret=twitter_keys['consumer_secret']
         self.access_token=twitter_keys['access_token_key']
         self.access_secret=twitter_keys['access_token_secret']
-        print(self.consumer_key,self.consumer_secret,self.access_token,self.access_secret)
         
         
     def OAuth_API_create(self):
+        
         auth=tp.OAuthHandler(consumer_key=self.consumer_key ,consumer_secret=self.consumer_secret)
         auth.set_access_token(key=self.access_token,secret=self.access_secret)
         api=tp.API(auth)
         return api
     
     def woeid_find(self,name):
+        
         woeid=pd.read_csv('/Users/satyadev/ML Projects/woeid.csv')
         flag=False
         for i in range(len(woeid)):
@@ -49,7 +50,6 @@ class Tweet:
             else:
                 sys.exit()
                                 
-
 
     def trends_extract(self,id_place,api):
         
@@ -70,20 +70,23 @@ class Tweet:
             else:
                 sys.exit()
         
-    def tweet_pull(self,keyword,api):
+        
+    def tweet_pull(self,keywords,api):
+        
         results=[]
-        results.append(api.search(q=keyword,count=1))
+        for i in range(len(keywords)):
+            results.append(api.search(q=keywords[i],count=1))
         return results
 
         
     def scour(self):
+        
         print('Enter country name: ')
         name=input().lower()
         woe_id=self.woeid_find(name)
         api=self.OAuth_API_create()
-        #trends,API=self.trends_extract(woe_id)
-        #print(trends)
-        tweets=self.tweet_pull('#HBDDearestThalaAJITH',api)         
+        trends=self.trends_extract(woe_id,api)
+        tweets=self.tweet_pull(trends,api)         
         return tweets
         
                     
