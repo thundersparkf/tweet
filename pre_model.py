@@ -7,19 +7,18 @@ Created on Fri May  1 12:00:24 2020
 """
 maxlen = 2000
 max_features = 50000
-embed_file= '/Users/satyadev/Downloads/glove/glove.6B.300d.txt'
+embed_file= '/Users/agastya/Downloads/glove/glove.6B.300d.txt'
 ###################
 import numpy as np
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.model_selection import train_test_split
-
 import pre_proc
 
 ###########################
 class Pre_Model:
     def __init__(self):
-        obj=pre_proc.Pre_Proc('/Users/satyadev/Downloads/fake-and-real-news-dataset/')
+        obj=pre_proc.Pre_Proc('/Users/agastya/Downloads/fake-and-real-news-dataset/')
         self.df=obj.preprocess()
         
         
@@ -45,12 +44,12 @@ class Pre_Model:
         return x_train_features,x_test_features,tokenize
     
     def get_coef(self,word,*arr):
-        return word,np.asarray(*arr,dtype='float32')
+        return word,np.asarray(arr)
     
     def embedding(self,x_train,x_test,tokenize):
         emb_index=dict(self.get_coef(*o.split(' '))for o in open(embed_file))
         all_emb=np.stack(emb_index.values())
-        emb_mean,emb_std=all_emb.mean(),all_emb.std()
+        emb_mean,emb_std=np.mean(all_emb),all_emb.std()
         emb_size=all_emb.shape(1)
         
         word_index=tokenize.word_index
