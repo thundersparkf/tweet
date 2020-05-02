@@ -7,23 +7,22 @@ Created on Fri May  1 12:00:24 2020
 """
 maxlen = 2000
 max_features = 50000
-embed_file= '/Users/agastya/Downloads/glove/glove.6B.300d.txt'
+embed_file= r'C:\Users\User\Downloads\NLP_tweet\tweet-master\glove\glove.6B.300d.txt'
 ###################
 import numpy as np
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.model_selection import train_test_split
 import pre_proc
-
+import io
 ###########################
 class Pre_Model:
     def __init__(self):
-        obj=pre_proc.Pre_Proc('/Users/agastya/Downloads/fake-and-real-news-dataset/')
+        obj=pre_proc.Pre_Proc(r'C:\Users\User\Downloads\NLP_tweet\tweet-master\data')
         self.df=obj.preprocess()
         
         
     def train_test(self,data):
-        print("PREMODEL",data.head())
         x_train,x_test,y_train,y_test=train_test_split(data['text'],data['veri'],test_size=0.2,random_state=666)
         return x_train,x_test,y_train,y_test
     
@@ -34,8 +33,6 @@ class Pre_Model:
         return tokenize
     
     def data_tokenize(self,x_train,x_test):
-        print(x_train)
-
         tokenize=self.keras_token(x_train,x_test)
         x_train_features=np.array(tokenize.texts_to_sequences(x_train))
         x_test_features=np.array(tokenize.texts_to_sequences(x_test))
@@ -46,15 +43,18 @@ class Pre_Model:
     def get_coef(self,word,*arr):
         return word,np.asarray(arr)
     
+
+    
     def embedding(self,x_train,x_test,tokenize):
-        emb_index=dict(self.get_coef(*o.split(' '))for o in open(embed_file))
-        all_emb=np.stack(emb_index.values())
-        emb_mean,emb_std=np.mean(all_emb),all_emb.std()
-        emb_size=all_emb.shape(1)
+        emb_index=dict(self.get_coef(*o.split(' '))for o in open(embed_file,encoding='utf8',errors='replace'))
         
+        all_emb=np.stack(emb_index.values())
+        all_emb=np.array(all_emb).astype(np.float32)
+        emb_mean,emb_std=all_emb.mean(),all_emb.std()
+        emb_size=all_emb.shape[1]
         word_index=tokenize.word_index
         nb_words=min(max_features,len(word_index))
-        emb_mat=np.random.normal(emb_mean,emb_std,(nb_words,emb_size))
+        emb_mat=np.random.normal(loc=emb_mean,scale=emb_std,size=(nb_words,emb_size))
         
         for word,i in word_index.items():
             if i>=max_features: continue
