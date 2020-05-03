@@ -44,7 +44,7 @@ class Pre_Model:
     
 
     
-    def embedding(tokenize):
+    def embedding(self,tokenize):
         emb_index=dict(self.get_coef(*o.split(' '))for o in open(embed_file,encoding='utf8',errors='replace'))
         
         all_emb=np.stack(emb_index.values())
