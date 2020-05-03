@@ -22,7 +22,7 @@ class Pre_Model:
         
         
     def train_test(self,data):
-        x_train,x_test,y_train,y_test=train_test_split(data['text'],data['veri'],test_size=0.2,random_state=666)
+        x_train,x_test,y_train,y_test=train_test_split(data['text'],data['veri'],test_size=0.3,random_state=666)
         return x_train,x_test,y_train,y_test
     
     def keras_token(self,x_train,x_test):
