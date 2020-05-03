@@ -39,7 +39,6 @@ class Model_class:
     def Model_train(self):
         model=self.Model_create()
         model.layers[1].trainable = False
-        gsc=GridSearchCV()
         param_grid={'batch_size':[512,1024,2048],'epochs':[3,5,7,10]}
         search=GridSearchCV(model,param_grid,cv=5)
         grid=search.fit(self.x_train,self.y_train)
