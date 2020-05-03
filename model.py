@@ -16,6 +16,7 @@ from keras.models import Model
 import matplotlib.pyplot as plt 
 from sklearn.metrics import accuracy_score,f1_score,precision_score,recall_score, confusion_matrix
 import pre_model
+from sklearn.model_selection import GridSearchCV
 
 ########################
 class Model_class:
@@ -38,7 +39,12 @@ class Model_class:
     def Model_train(self):
         model=self.Model_create()
         model.layers[1].trainable = False
-        history = model.fit(self.x_train, self.y_train, batch_size=512, epochs=30, validation_data=(self.x_test, self.y_test),shuffle=True)
+        gsc=GridSearchCV()
+        param_grid={'batch_size':[512,1024,2048],'epochs':[3,5,7,10]}
+        search=GridSearchCV(model,param_grid,cv=5)
+        grid=search.fit(self.x_train,self.y_train)
+        params=grid.best_params_
+        history = model.fit(self.x_train, self.y_train, batch_size=params['batch_size'], epochs=params['epochs'], validation_data=(self.x_test, self.y_test),shuffle=True)
         self.graph(history)
         self.predic(model)
         return history,model
