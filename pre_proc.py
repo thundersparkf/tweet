@@ -9,22 +9,27 @@ Created on Thu Apr 30 23:33:21 2020
 import pandas as pd
 import re
 import string
-from nltk.stem import WordNetLemmatizer
+from nltk.stem import WordNetLemmatizer, PorterStemmer
 from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
 from nltk.tokenize import word_tokenize
-from sklearn.feature_extraction.text import CountVectorizer
 
 
 #############################################################################
 class Pre_Proc:
-    """Class to """
+    '''
+    Objective: This class is for cleaning the data set.
+    '''
+    
+    
+    
+    
     
     def __init__(self,path):
         self.path=path
-        true=self.path+'\True.csv'
-        fake=self.path+'\Fake.csv'
-        self.true=pd.read_csv(true)
-        self.false=pd.read_csv(fake)
+        true=self.path+'/True.csv'
+        fake=self.path+'/Fake.csv'
+        self.true=pd.read_csv(true,nrows=5)
+        self.false=pd.read_csv(fake,nrows=5)
         self.true['veri']=1
         self.false['veri']=0
 
@@ -71,6 +76,11 @@ class Pre_Proc:
         data[name]=data[name].apply(lambda x: word_tokenize(str(x)))
         return data
     
+    def Stemmer(self,data,name):
+        stem=PorterStemmer()
+        data[name]=data[name].apply(lambda x: [stem.stem(word) for word in x])
+        return data
+    
     def dont_stop_me_now(self,data,name):
         data[name]=data[name].apply(lambda x: [word for word in x if word not in ENGLISH_STOP_WORDS])
         return data
@@ -79,8 +89,9 @@ class Pre_Proc:
         lem=WordNetLemmatizer()
         data[name]=data[name].apply(lambda x: [lem.lemmatize(word) for word in x])
         return data
+    
     def pipe_token(self,data,name):
-        pre_process=[self.token_it,self.dont_stop_me_now,self.lemmatize]
+        pre_process=[self.token_it, self.Stemmer, self.dont_stop_me_now, self.lemmatize]
         for func in pre_process:
             data=func(data,name)
         return data

@@ -7,18 +7,17 @@ Created on Fri May  1 12:00:24 2020
 """
 maxlen = 2000
 max_features = 50000
-embed_file= r'C:\Users\User\Downloads\NLP_tweet\tweet-master\glove\glove.6B.300d.txt'
+embed_file=''
 ###################
 import numpy as np
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.model_selection import train_test_split
 import pre_proc
-import io
 ###########################
 class Pre_Model:
-    def __init__(self):
-        obj=pre_proc.Pre_Proc(r'C:\Users\User\Downloads\NLP_tweet\tweet-master\data')
+    def __init__(self,data_path):
+        obj=pre_proc.Pre_Proc(data_path)
         self.df=obj.preprocess()
         
         
@@ -45,7 +44,7 @@ class Pre_Model:
     
 
     
-    def embedding(self,x_train,x_test,tokenize):
+    def embedding(tokenize):
         emb_index=dict(self.get_coef(*o.split(' '))for o in open(embed_file,encoding='utf8',errors='replace'))
         
         all_emb=np.stack(emb_index.values())
@@ -66,7 +65,7 @@ class Pre_Model:
     def pre_mod(self):
         x_train,x_test,y_train,y_test=self.train_test(self.df)
         x_train,x_test,tokenize=self.data_tokenize(x_train, x_test)
-        emb_size,emb_mat=self.embedding(x_train, x_test, tokenize)
+        emb_size,emb_mat=self.embedding(tokenize)
         return x_train,x_test,y_train,y_test,emb_size,emb_mat
         
         

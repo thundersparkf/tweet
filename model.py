@@ -19,8 +19,8 @@ import pre_model
 
 ########################
 class Model_class:
-    def __init__(self):
-        obj=pre_model.Pre_Model()
+    def __init__(self,data_path):
+        obj=pre_model.Pre_Model(data_path)
         self.x_train,self.x_test,self.y_train,self.y_test,self.emb_size,self.emb_mat=obj.pre_mod()
     
     def Model_create(self):
