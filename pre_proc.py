@@ -28,8 +28,8 @@ class Pre_Proc:
         self.path=path
         true=self.path+'/True.csv'
         fake=self.path+'/Fake.csv'
-        self.true=pd.read_csv(true,nrows=5)
-        self.false=pd.read_csv(fake,nrows=5)
+        self.true=pd.read_csv(true)
+        self.false=pd.read_csv(fake)
         self.true['veri']=1
         self.false['veri']=0
 
