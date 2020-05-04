@@ -54,8 +54,9 @@ class Pre_Proc:
                 col_names1.append(name) 
         data=data.drop(labels=col_names,axis=1)
         print('CONCAT TWO: ',np.unique(data['veri']))
-        print(self
+        print('MIXED DCOLUMNS BEFORE: ',self.mixed.columns)
         self.mixed=self.mixed.drop(labels=col_names1,axis=1)
+        print('MIXED DCOLUMNS After: ',self.mixed.columns)
         print('MIXED DROP KE BAAD: ',np.unique(self.mixed['veri']))
         data=pd.concat(objs=[self.mixed,data],axis=0)
         data.index=[x for x in range(len(data))]
