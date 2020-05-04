@@ -29,7 +29,7 @@ class Model_class:
         x=Bidirectional(LSTM(64, return_sequences=True))(x)
         x=GlobalMaxPool1D()(x)
         x=Dense(16,activation='relu')(x)
-        x=Dropout(0.1)(x)
+        x=Dropout(0.2)(x)
         x=Dense(1,activation='sigmoid')(x)
         model=Model(inputs=inp,outputs=x)
         model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
