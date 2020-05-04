@@ -41,9 +41,7 @@ class Model_class:
     def Model_train(self):
         model=self.Model_create()
         model.layers[1].trainable = False
-        classes=np.array([0,1])
-        class_weights=compute_class_weight('balanced',classes,np.array(self.y_train))
-        class_weights = dict(enumerate(class_weights))
+        class_weights=compute_class_weight('balanced',np.unique(self.y_train),self.y_train)
         history = model.fit(self.x_train, self.y_train, batch_size=2048, epochs=5, validation_data=(self.x_test, self.y_test),shuffle=True,class_weight=class_weights)
         self.graph(history)
         self.predic(model)
