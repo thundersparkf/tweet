@@ -91,7 +91,7 @@ class Pre_Proc:
         return data
     
     def pipe_token(self,data,name):
-        pre_process=[self.token_it,''' self.Stemmer, '''self.dont_stop_me_now, self.lemmatize]
+        pre_process=[self.token_it, self.dont_stop_me_now, self.lemmatize]
         for func in pre_process:
             data=func(data,name)
         return data
