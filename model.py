@@ -15,9 +15,8 @@ from keras.layers import Bidirectional,GlobalMaxPool1D
 from keras.models import Model
 import matplotlib.pyplot as plt 
 from sklearn.metrics import accuracy_score,f1_score,precision_score,recall_score, confusion_matrix
-from imblearn.over_sampling import SMOTE
-from imblearn.under_sampling import RandomUnderSampler
-from imblearn.pipeline import Pipeline
+from sklearn.metrics import roc_curve, roc_auc_score
+from sklearn.utils.class_weight import compute_class_weight
 import numpy as np
 import pre_model
 
@@ -42,13 +41,9 @@ class Model_class:
     def Model_train(self):
         model=self.Model_create()
         model.layers[1].trainable = False
-        
-        over= SMOTE(sampling_strategy=0.1)
-        under = RandomUnderSampler(sampling_strategy=0.5)
-        steps = [('o', over), ('u', under)]
-        pipeline = Pipeline(steps=steps)
-        self.x_train, self.y_train = pipeline.fit_resample(self.x_train, self.y_train)
-        history = model.fit(self.x_train, self.y_train, batch_size=2048, epochs=5, validation_data=(self.x_test, self.y_test),shuffle=True)
+        classes=np.array([0,1])
+        class_weights=compute_class_weight('balanced',classes,np.array(self.y_train))
+        history = model.fit(self.x_train, self.y_train, batch_size=2048, epochs=5, validation_data=(self.x_test, self.y_test),shuffle=True,class_weight=class_weights)
         self.graph(history)
         self.predic(model)
         return history,model
