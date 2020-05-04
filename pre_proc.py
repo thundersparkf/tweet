@@ -12,7 +12,7 @@ import string
 from nltk.stem import WordNetLemmatizer, PorterStemmer
 from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
 from nltk.tokenize import word_tokenize
-
+import numpy as np
 
 #############################################################################
 class Pre_Proc:
