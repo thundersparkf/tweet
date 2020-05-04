@@ -28,17 +28,20 @@ class Pre_Proc:
         self.path=path
         true=self.path+'/True.csv'
         fake=self.path+'/Fake.csv'
+        mixed=self.path+'/train.csv'
         self.true=pd.read_csv(true)
         self.false=pd.read_csv(fake)
+        self.mixed=pd.read_csv(mixed)
         self.true['veri']=1
         self.false['veri']=0
 
         
         
     def conc(self):
-        data=pd.concat(objs=[self.true,self.false],axis=0)
+        data=pd.concat(objs=[self.true,self.false,self.mixed],axis=0)
         data.index=[x for x in range(len(data))]
-        data=data.drop(labels=['subject','date'],axis=1)
+        named=['title','text']
+        data=data.drop(labels=[name if name not in named for name in data.columns],axis=1)
         return data
 ###    
     def rem_links(self,text):
