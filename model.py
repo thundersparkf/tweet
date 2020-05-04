@@ -42,7 +42,7 @@ class Model_class:
         model=self.Model_create()
         model.layers[1].trainable = False
         print('the fuck')
-        print(set(np.unique(self.y_train))set(self.y_train))
+        print(set(np.unique(self.y_train))-set(self.y_train))
         print('whtever the hell')
         class_weights=compute_class_weight('balanced',np.unique(self.y_train),self.y_train)
         history = model.fit(self.x_train, self.y_train, batch_size=2048, epochs=5, validation_data=(self.x_test, self.y_test),shuffle=True,class_weight=class_weights)
