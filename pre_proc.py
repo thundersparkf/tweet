@@ -31,10 +31,10 @@ class Pre_Proc:
         mixed=self.path+'/train.csv'
         self.true=pd.read_csv(true)
         self.false=pd.read_csv(fake)
-        self.mixed=pd.read_csv(mixed)
+        self.mixed=pd.read_csv(mixed,nrows=10000)
         self.true['veri']=1
         self.false['veri']=0
-      
+        self.mixed=self.mixed.rename({'label':'veri'})
 
         
         
