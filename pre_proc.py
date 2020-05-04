@@ -54,7 +54,7 @@ class Pre_Proc:
         data=pd.concat(objs=[self.mixed,data],axis=0)
         data.index=[x for x in range(len(data))]
         print(data.tail(100))
-        print(np.unique(data['veri'])
+        print(np.unique(data['veri']))
         return data
 ###    
     def rem_links(self,text):
