@@ -43,11 +43,15 @@ class Pre_Proc:
         data.index=[x for x in range(len(data))]
         named=['title','text']
         col_names=[]
+        col_names1=[]
         for name in data.columns:
             if name not in named:
-                col_names.append(name)        
+                col_names.append(name) 
+        for name in self.mixed.columns:
+            if name not in named:
+                col_names1.append(name) 
         data=data.drop(labels=col_names,axis=1)
-        self.mixed=self.mixed.drop(labels=col_names,axis=1)
+        self.mixed=self.mixed.drop(labels=col_names1,axis=1)
         data=pd.concat(objs=[self.mixed,data],axis=0)
         return data
 ###    
