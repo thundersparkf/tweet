@@ -52,7 +52,7 @@ class Pre_Proc:
                 col_names1.append(name) 
         data=data.drop(labels=col_names,axis=1)
         self.mixed=self.mixed.drop(labels=col_names1,axis=1)
-        data=pd.concat(objs=[self.mixed,data],axis=0)
+        data=pd.concat(objs=[self.mixed,data],axis=0,sort=True)
         return data
 ###    
     def rem_links(self,text):
