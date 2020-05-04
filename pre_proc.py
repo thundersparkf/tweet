@@ -76,10 +76,10 @@ class Pre_Proc:
         data[name]=data[name].apply(lambda x: word_tokenize(str(x)))
         return data
     
-    def Stemmer(self,data,name):
-        stem=PorterStemmer()
-        data[name]=data[name].apply(lambda x: [stem.stem(word) for word in x])
-        return data
+    #def Stemmer(self,data,name):
+     #   stem=PorterStemmer()
+      #  data[name]=data[name].apply(lambda x: [stem.stem(word) for word in x])
+       # return data
     
     def dont_stop_me_now(self,data,name):
         data[name]=data[name].apply(lambda x: [word for word in x if word not in ENGLISH_STOP_WORDS])
@@ -91,7 +91,7 @@ class Pre_Proc:
         return data
     
     def pipe_token(self,data,name):
-        pre_process=[self.token_it, self.Stemmer, self.dont_stop_me_now, self.lemmatize]
+        pre_process=[self.token_it,''' self.Stemmer, '''self.dont_stop_me_now, self.lemmatize]
         for func in pre_process:
             data=func(data,name)
         return data
