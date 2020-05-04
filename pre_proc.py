@@ -34,11 +34,12 @@ class Pre_Proc:
         self.mixed=pd.read_csv(mixed)
         self.true['veri']=1
         self.false['veri']=0
+      
 
         
         
     def conc(self):
-        data=pd.concat(objs=[self.true,self.false,self.mixed],axis=0)
+        data=pd.concat(objs=[self.true,self.false],axis=0)
         data.index=[x for x in range(len(data))]
         named=['title','text']
         col_names=[]
@@ -46,6 +47,8 @@ class Pre_Proc:
             if name not in named:
                 col_names.append(name)        
         data=data.drop(labels=col_names,axis=1)
+        self.mixed=self.mixed.drop(labels=col_names,axis=1)
+        data=pd.concat(objs=[self.mixed,data],axis=0)
         return data
 ###    
     def rem_links(self,text):
