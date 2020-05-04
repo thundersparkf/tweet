@@ -41,7 +41,7 @@ class Pre_Proc:
     def conc(self):
         data=pd.concat(objs=[self.true,self.false],axis=0)
         data.index=[x for x in range(len(data))]
-        named=['title','text']
+        named=['title','text','veri']
         col_names=[]
         col_names1=[]
         for name in data.columns:
