@@ -34,12 +34,15 @@ class Pre_Proc:
         self.mixed=pd.read_csv(mixed)
         self.true['veri']=1
         self.false['veri']=0
-        self.mixed=self.mixed.rename({'label':'veri'},inplace=True)
-
+        self.mixed=self.mixed.rename({'label':'veri'})
+        print('MIXXED COLS: ',self.mixed.columns)
+        print('MIXED UNIQUE: ',np.unique(self.mixed['veri']))
+        
         
         
     def conc(self):
         data=pd.concat(objs=[self.true,self.false],axis=0)
+        print('CONCAT ONE: 'np.unique(data['veri']))
         named=['title','text','veri']
         col_names=[]
         col_names1=[]
@@ -50,7 +53,10 @@ class Pre_Proc:
             if name not in named:
                 col_names1.append(name) 
         data=data.drop(labels=col_names,axis=1)
+        print('CONCAT TWO: 'np.unique(data['veri']))
+        print(self
         self.mixed=self.mixed.drop(labels=col_names1,axis=1)
+        print('MIXED DROP KE BAAD: ',np.unique(self.mixed['veri']))
         data=pd.concat(objs=[self.mixed,data],axis=0)
         data.index=[x for x in range(len(data))]
         print(data.tail(100))
