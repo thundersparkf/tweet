@@ -40,8 +40,7 @@ class Pre_Proc:
         
     def conc(self):
         data=pd.concat(objs=[self.true,self.false],axis=0)
-        data.index=[x for x in range(len(data))]
-        named=['title','text','veri']
+        named=['title','text','veri','label']
         col_names=[]
         col_names1=[]
         for name in data.columns:
@@ -52,7 +51,10 @@ class Pre_Proc:
                 col_names1.append(name) 
         data=data.drop(labels=col_names,axis=1)
         self.mixed=self.mixed.drop(labels=col_names1,axis=1)
-        data=pd.concat(objs=[self.mixed,data],axis=0,sort=True)
+        data=pd.concat(objs=[self.mixed,data],axis=0)
+        data.index=[x for x in range(len(data))]
+        print(data.tail(100))
+        print(np.unique(data['veri'])
         return data
 ###    
     def rem_links(self,text):
