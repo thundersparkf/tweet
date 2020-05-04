@@ -41,7 +41,11 @@ class Pre_Proc:
         data=pd.concat(objs=[self.true,self.false,self.mixed],axis=0)
         data.index=[x for x in range(len(data))]
         named=['title','text']
-        data=data.drop(labels=[name if name not in named for name in data.columns],axis=1)
+        col_names=[]
+        for name in data.columns:
+            if name not in named:
+                col_names.append(name)        
+        data=data.drop(labels=col_names,axis=1)
         return data
 ###    
     def rem_links(self,text):
