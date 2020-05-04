@@ -53,7 +53,7 @@ class Pre_Proc:
             if name not in named:
                 col_names1.append(name) 
         data=data.drop(labels=col_names,axis=1)
-        print('CONCAT TWO: 'np.unique(data['veri']))
+        print('CONCAT TWO: ',np.unique(data['veri']))
         print(self
         self.mixed=self.mixed.drop(labels=col_names1,axis=1)
         print('MIXED DROP KE BAAD: ',np.unique(self.mixed['veri']))
