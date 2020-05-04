@@ -34,7 +34,7 @@ class Pre_Proc:
         self.mixed=pd.read_csv(mixed)
         self.true['veri']=1
         self.false['veri']=0
-        self.mixed=self.mixed.rename({'label':'veri'})
+        self.mixed=self.mixed.rename({'label':'veri'},inplace=True)
 
         
         
