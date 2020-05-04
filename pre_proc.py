@@ -120,7 +120,7 @@ class Pre_Proc:
 
         #print(type(data))
         for i in range(len(data)):
-            data['text'].iloc[i,]=str(data['text'].iloc[i,])+str(data['title'].iloc[i,])
+            data['text'].iloc[i]=str(data['text'].iloc[i])+str(data['title'].iloc[i])
  
         data=data.drop(labels=['title'],axis=1)
         
