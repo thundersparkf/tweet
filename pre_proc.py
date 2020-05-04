@@ -73,7 +73,7 @@ class Pre_Proc:
         return text
     
     def pipe_text(self,text):
-        cleaner=[self.rem_line,self.rem_links,self.rem_punct,self.rem_white,self.lower_text,self.number]
+        cleaner=[self.rem_links,self.rem_punct,self.rem_white,self.lower_text,self.rem_line,self.number]
         for func in cleaner:
             text=func(text)
 
