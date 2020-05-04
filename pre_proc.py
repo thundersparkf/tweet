@@ -42,7 +42,7 @@ class Pre_Proc:
         
     def conc(self):
         data=pd.concat(objs=[self.true,self.false],axis=0)
-        print('CONCAT ONE: 'np.unique(data['veri']))
+        print('CONCAT ONE: ',np.unique(data['veri']))
         named=['title','text','veri']
         col_names=[]
         col_names1=[]
