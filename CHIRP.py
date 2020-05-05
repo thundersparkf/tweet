@@ -96,11 +96,11 @@ class Tweet:
             print('Type Y to re enter country:')
             choice=input().lower()
             if choice=='y':
-                self.scour()
+                self.trends_extract()
             else:
                 sys.exit()
             
-    def user_pull(self,name,api):
+    def user_pull(self):
         '''
         
 
@@ -115,16 +115,28 @@ class Tweet:
 
         '''
 
-        user_tweets=api.user_timeline(screen_name=name)
+        print('Enter screen name of the twitter handle: ')
+        name=input()
+        api=self.OAuth_API_create()
+        user_tweets=api.user_timeline(screen_name=name,tweet_mode='extended')
         tweets=[]
-        print(user_tweets[0])
-        for i in range(len(user_tweets)):
-            tweets.append(user_tweets[i].text)
+        try: 
+            for i in range(len(user_tweets)):
+                tweets.append(user_tweets[i].full_text)
+        except tp.TweepError:
+            print('Could not authenticate your request. Verify your consumer key and your consumer key secret.')
+            print('Type Y to retry:')
+            choice=input().lower()
+            if choice=='y':
+                self.user_pull(name)    
+            else:
+                sys.exit()
+            
         return tweets
         
                                 
 
-    def trends_extract(self,id_place,api):
+    def trends_extract(self):
         
         '''
         Parameters
@@ -137,26 +149,31 @@ class Tweet:
         trend : list of str objects- Trends on Twitter based on Geographical location.
 
         '''
-        
+        api=self.OAuth_API_create()    
+        print('Enter country name: ')
+        name=input().lower()
+        woe_id=self.woeid_find(name)
         try:
-            trends_id=api.trends_place(id=id_place)
+            trends_id=api.trends_place(id=woe_id)
             trend=[]
             trends_id=dict(trends_id[0])
             trends_id=trends_id['trends']
             for i in range(len(trends_id)):
                 trend.append(trends_id[i]['name'])
-            return trend
+            
         except tp.TweepError:
             print('Could not authenticate your request. Verify your consumer key and your consumer key secret.')
             print('Type Y to retry:')
             choice=input().lower()
             if choice=='y':
-                self.trends_extract(id_place)    
+                self.trends_extract(woe_id)    
             else:
                 sys.exit()
+        return trend
         
         
-    def tweet_pull(self,keywords,api):
+        
+    def tweet_pull(self):
         
         '''
         Parameters
@@ -167,36 +184,27 @@ class Tweet:
 
         Returns
         -------
-        results : Someweird jackshit I still haven't figured out
-
-        '''
-        
-        results=[]
-        for i in range(len(keywords)):
-            results.append(api.search(q=keywords[i],count=1))
-        return results
-
-        
-    def scour(self):
-        '''
-        
-        Returns
-        -------
         tweets : Someweird jackshit I still haven't figured out
+
         '''
-        
-        
-        
-        print('Enter name: ')
+        print('Enter search word: ')
         name=input().lower()
-        #woe_id=self.woeid_find(name)
-        api=self.OAuth_API_create()
-        #trends=self.trends_extract(woe_id,api)
-        tweets=self.user_pull(name,api)     
+        api=self.OAuth_API_create()        
+        tweets=[]
+        try:
+            tweets.append(api.search(q=name))
+        except tp.TweepError:
+            print('Could not authenticate your request. Verify your consumer key and your consumer key secret.')
+            print('Type Y to retry:')
+            choice=input().lower()
+            if choice=='y':
+                self.tweet_pull(name)    
+            else:
+                sys.exit()
+            
         return tweets
 
         
-
 
             
         
