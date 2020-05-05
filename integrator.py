@@ -29,8 +29,8 @@ class Integrator:
         access_key=input('Access Key: ')
         access_key_secret=input('Access Key Secret:')
         print('Let us now pray these are correct. Thank you.')
-        twitter_keys={'consumer_key':consumer_key,'consumer_key_secret':consumer_key_secret,
-                           'access_token':access_key,'access_key_secret':access_key_secret}
+        twitter_keys={'consumer_key':consumer_key,'consumer_secret':consumer_key_secret,
+                           'access_token_key':access_key,'access_token_secret':access_key_secret}
         time.sleep(3)
         return twitter_keys
 
