@@ -17,7 +17,7 @@ class Integrator:
         loaded_model_json = json_file.read()
         json_file.close()
         self.model = model_from_json(loaded_model_json)
-        self.model.load_weights("/Users/satyadev/Downloads/model-2.h5")
+        self.model.load_weights("model-2.h5")
         self.model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
         
