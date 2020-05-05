@@ -10,8 +10,6 @@ Created on Thu Apr 30 12:15:13 2020
 import tweepy as tp
 import pandas as pd
 import sys
-import preprocessor
-
 #############################################################################
 
 class Tweet:    
@@ -20,13 +18,6 @@ class Tweet:
     Objective: This class is for capsuling all API related methods.
     
     Authorization used: OAuth 1.0
-    Authorization Keys and Tokens: 
-    twitter_keys = {
-        'consumer_key':        'U4W8eBUcHUs8mYSfVreqbbMN7',
-        'consumer_secret':     'SzNG09CQ4kH2BTskYkXhxZa2XlcBM2qCdql4tBFgdFRn3h53VE',
-        'access_token_key':    '1255208873591357440-rIB7vF1eeFeWZpEvNZb37lN0o4Y06B',
-        'access_token_secret': 'gVoK9ORmYvUjVv0efZv8ZAv6zy6Vo6yK6t4njUkkN3HZy'
-    }
     
     Params : 
     ------    
@@ -60,11 +51,13 @@ class Tweet:
 
         '''
 
+
         self.consumer_key=twitter_keys['consumer_key']
         self.consumer_secret=twitter_keys['consumer_secret']
         self.access_token=twitter_keys['access_token_key']
         self.access_secret=twitter_keys['access_token_secret']
-        
+
+
         
     def OAuth_API_create(self):
         
@@ -106,6 +99,29 @@ class Tweet:
                 self.scour()
             else:
                 sys.exit()
+            
+    def user_pull(self,name,api):
+        '''
+        
+
+        Parameters
+        ----------
+        name : str type- screen name or handle name of the user.
+        api : tweepy.API type object-Object that has the OAuth authorization loaded.
+
+        Returns
+        -------
+        tweets : list type- Tweets by the handle that was passed as argument
+
+        '''
+
+        user_tweets=api.user_timeline(screen_name=name)
+        tweets=[]
+        print(user_tweets[0])
+        for i in range(len(user_tweets)):
+            tweets.append(user_tweets[i].text)
+        return tweets
+        
                                 
 
     def trends_extract(self,id_place,api):
@@ -171,15 +187,15 @@ class Tweet:
         
         
         
-        print('Enter country name: ')
+        print('Enter name: ')
         name=input().lower()
-        woe_id=self.woeid_find(name)
+        #woe_id=self.woeid_find(name)
         api=self.OAuth_API_create()
-        trends=self.trends_extract(woe_id,api)
-        tweets=self.tweet_pull(trends,api)         
+        #trends=self.trends_extract(woe_id,api)
+        tweets=self.user_pull(name,api)     
         return tweets
+
         
-                    
 
 
             
