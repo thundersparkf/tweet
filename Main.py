@@ -22,10 +22,11 @@ def  load_model():
         
 def test():
     tweep=integrator.Integrator()
-    pred=tweep.tweet_analyser()
+    pred,tweets=tweep.tweet_analyser()
+ 
     print('Here goes my hard work:')
-    for y in pred:
-        print(y)
+    for y,tweet in zip(pred,tweets):
+        print("{}, {}".format(y,tweet))
             
 def main():
     print('Type 1 for training model.\nType 2 for testing model. ')
