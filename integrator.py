@@ -41,12 +41,7 @@ class Integrator:
         tweets=tweep.user_pull()
         tester=pre_model.Pre_Model('whateverman')
         model_inp=tester.data_tokenize_test(tweets)
-        y=[1 if o>0.5 else 0 for o in self.model.predict(model_inp)]
-        for i in range(len(y)):
-            if y[i]==1:
-                y[i]='True'
-            else:
-                y[i]='False'
+        y=[o for o in self.model.predict(model_inp)]
         return y
         
         
