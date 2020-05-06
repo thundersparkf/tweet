@@ -42,7 +42,7 @@ class Integrator:
         tester=pre_model.Pre_Model('whateverman')
         model_inp=tester.data_tokenize_test(tweets)
         y=[o for o in self.model.predict(model_inp)]
-        return y
+        return y,tweets
         
         
         
