@@ -1,2 +1,2 @@
 # Tweeter
-Twitter Developer
+Tweet classifier
